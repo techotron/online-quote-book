@@ -1,7 +1,9 @@
 package api
 
 import (
+	"github.com/techotron/online-quote-book/backend/controllers"
 	"github.com/techotron/online-quote-book/backend/log"
+
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	ginlogrus "github.com/toorop/gin-logrus"
@@ -10,7 +12,6 @@ import (
 // Setup API using gin with routes and cors settings
 func Setup() *gin.Engine {
 	router := gin.New()
-	addMetrics(router)
 	router.Use(ginlogrus.Logger(log.Logger), gin.Recovery())
 	addAllowAllCors(router)
 	addRoutes(router)

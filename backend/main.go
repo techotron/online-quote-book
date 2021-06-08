@@ -6,7 +6,6 @@ import (
 	log "github.com/techotron/online-quote-book/backend/log"
 )
 
-
 func main() {
 	router := api.Setup()
 
@@ -28,8 +27,6 @@ func main() {
 		log.Error("An error occurred while running the database migration")
 		log.Error(err)
 	}
-
-	startCron()
 
 	err = router.Run(":5000")
 	if err != nil {

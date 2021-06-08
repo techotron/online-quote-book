@@ -6,14 +6,11 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// Logger of backend
 var Logger *logrus.Logger
 
 func init() {
 	Logger = logrus.New()
-	// TODO: use text formatter when running locally
 	Logger.SetFormatter(&logrus.JSONFormatter{})
-	// write only to stdout
 	Logger.SetOutput(os.Stdout)
 }
 

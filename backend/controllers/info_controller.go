@@ -2,8 +2,6 @@ package controllers
 
 import (
 	"net/http"
-	"strconv"
-	"time"
 
 	log "github.com/techotron/online-quote-book/backend/log"
 	"github.com/gin-gonic/gin"

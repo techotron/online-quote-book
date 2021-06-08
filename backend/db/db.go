@@ -3,14 +3,11 @@ package db
 import (
 	"fmt"
 
-	"github.com/techotron/online-quote-book/backend/db"
 	log "github.com/techotron/online-quote-book/backend/log"
-	"github.com/techotron/online-quote-book/backend/db"
 	"github.com/techotron/online-quote-book/backend/config"
 
 	"github.com/jmoiron/sqlx"
 
-	
 	// create package-level variables and execute the init function of that package.
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	_ "github.com/lib/pq"
