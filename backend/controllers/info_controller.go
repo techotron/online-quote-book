@@ -16,7 +16,7 @@ func GetInfo(c *gin.Context) {
 	i, err := services.GetSchemaInfo()
 	if err != nil {
 		log.Errorf("Server error: %S", err)
-		c.JSON(http.StatusInternalServerError, "Failed to fetch DB schema version")
+		c.JSON(http.StatusInternalServerError, MessageHandler("Failed to fetch DB schema version"))
 		return
 	}
 	c.JSON(http.StatusOK, i)

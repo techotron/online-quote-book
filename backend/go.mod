@@ -27,4 +27,5 @@ require (
 	golang.org/x/sys v0.0.0-20210608053332-aa57babbf139 // indirect
 	gopkg.in/airbrake/gobrake.v2 v2.0.9 // indirect
 	gopkg.in/gemnasium/logrus-airbrake-hook.v2 v2.1.2 // indirect
+	gopkg.in/guregu/null.v4 v4.0.0
 )
