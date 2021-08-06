@@ -1,6 +1,8 @@
 CREATE TABLE IF NOT EXISTS quote_books(
     quote_book_id SERIAL PRIMARY KEY,
-    quote_book_name TEXT NOT NULL
+    quote_book_name TEXT NOT NULL,
+    created_on TIMESTAMP,
+    last_updated TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS witnesses(

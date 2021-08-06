@@ -9,5 +9,4 @@ type Quotes struct {
 	Quotee			string		`db:"quotee_name" json:"quotee"`
 	Witness			string		`db:"witness_name" json:"witness"`
 	QuoteDate		time.Time	`db:"quote_date" json:"quoteDate"`
-
 }
