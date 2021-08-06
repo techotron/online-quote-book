@@ -1,6 +1,6 @@
 import React from "react";
-import { Container } from 'react-bootstrap';
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { Container } from 'react-bootstrap';
 
 import Info from './Info/info';
 import QuoteBook from './QuoteBook/quotebook';
@@ -13,7 +13,7 @@ function Router() {
                     <Route exact
                         path='/'
                         render={() =>
-                            <Container fluid="sm" style={{ paddingTop: "20px" }}>
+                            <Container>
                                 <h1>Online Quote Book</h1>
                             </Container>
                         }
@@ -23,7 +23,7 @@ function Router() {
                         component={Info}
                     />                    
                     <Route exact
-                        path='/quotebooks/:quotebookname'
+                        path='/quotebooks/:quotebookCollection/:quotebookname'
                         component={QuoteBook}
                     />
                 </Switch>

@@ -10,7 +10,8 @@ import ErrorPage from '../Errors/errorpage';
 const QuoteBook = ({ location }) => {
     const [quotes, setQuotes] = useState('');
     const [isLoaded, setIsLoaded] = useState(false);
-    const [quoteBook, setQuoteBook] = useState('');
+    const [quotebookCollection, setQuotebookCollection] = useState('');
+    const [quotebook, setQuoteBook] = useState('');
     const [isError, setIsError] = useState(false);
 
     const backendUrl = window.env.REACT_APP_BACKEND_API
@@ -18,9 +19,10 @@ const QuoteBook = ({ location }) => {
     useEffect(() => {
         const pathname = location.pathname.split('/');
         setQuoteBook(pathname[pathname.length - 1]);
+        setQuotebookCollection(pathname[pathname.length - 2]);
         
-        if (quoteBook !== '') {
-            axios.get(`${backendUrl}/quotes/${quoteBook}`)
+        if (quotebook !== '') {
+            axios.get(`${backendUrl}/quotes/${quotebookCollection}/${quotebook}`)
             .then(res => {
                 setQuotes(res.data);
                 setIsLoaded(true);
@@ -31,7 +33,7 @@ const QuoteBook = ({ location }) => {
                 setIsError(true);
             })
         }
-    }, [backendUrl, location.pathname, quoteBook])
+    }, [backendUrl, location.pathname, quotebook, quotebookCollection])
 
     const dateFormatter = (date) => {
         let fdate = dayjs(date).format('DD-MM-YYYY')
@@ -42,7 +44,7 @@ const QuoteBook = ({ location }) => {
         <Container>
             {(isLoaded && !isError) ?
             <Container>
-                <h1>Quotes: {quoteBook}</h1>
+                <h1>Quotes: {quotebook}</h1>
                 <Table striped bordered hover>
                 <thead>
                     <tr>

@@ -6,19 +6,19 @@ import (
 )
 
 // GetQuotes returns quotes from the database for a specified quote book
-func GetQuotes(quoteBook string) (quotes []models.Quotes, sqlError error) {
+func GetQuotes(quotebookCollection, quotebook string) (quotes []models.Quotes, sqlError error) {
 	quotes = []models.Quotes{}
 	rows, sqlError := db.Conn.Queryx(`SELECT 
-			quote_book_name,
+			quotes.quote_book_name,
 			quote_text,
 			quotee_name,
 			witness_name,
 			quote_date
 		FROM quotes 
-		LEFT JOIN quote_books ON quotes.quote_book_id = quote_books.quote_book_id
+		LEFT JOIN quote_books ON quotes.quote_book_collection = quote_books.quote_book_collection AND quotes.quote_book_name = quote_books.quote_book_name
 		LEFT JOIN quotees ON quotes.quotee_id = quotees.quotee_id
 		LEFT JOIN witnesses ON quotes.witness_id = witnesses.witness_id
-		WHERE quote_books.quote_book_name=$1`, quoteBook)
+		WHERE quote_books.quote_book_collection=$1 AND quote_books.quote_book_name=$2`, quotebookCollection, quotebook)
 	if sqlError != nil {
 		return quotes, sqlError
 	}
