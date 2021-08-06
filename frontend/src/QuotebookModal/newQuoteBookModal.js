@@ -1,6 +1,32 @@
-import { Modal, Button } from 'react-bootstrap';
+import React, { useState } from "react";
+import { Modal, Button, Form } from 'react-bootstrap';
+import axios from 'axios';
 
 const NewQuoteBookModal = ({ show, onHide }) => {
+    const [newQuotebookName, setNewQuotebookName] = useState('');
+    const [newQuotebookCollection, setNewQuotebookCollection] = useState('public');
+
+    const backendUrl = window.env.REACT_APP_BACKEND_API
+
+    const onSubmit = (quotebookCollection, quotebookName) => {
+        axios.post(`${backendUrl}/quotebook/${quotebookCollection}/${quotebookName}`)
+        .then(res => {
+            console.log(res.data)
+            window.location.href = `/quotebooks/${quotebookCollection}/${quotebookName}`
+        })
+        .catch(err => {
+            console.error(err)
+        })
+    }
+
+    const handleQuotebookNameChange = (e) => {
+        setNewQuotebookName(e.target.value)
+    }
+
+    const handleQuotebookCollectionChange = (e) => {
+        setNewQuotebookCollection(e.target.value)
+    }
+
     return (
         <Modal animation={true} show={show} onHide={onHide}>
             <Modal.Header closeButton>
@@ -8,12 +34,22 @@ const NewQuoteBookModal = ({ show, onHide }) => {
             </Modal.Header>
 
             <Modal.Body>
-                <p>Modal body text goes here.</p>
+                <Form>
+                    <b>Quotebook Collection</b>
+                    <Form.Group className="pt-2">
+                        <Form.Control type="text" placeholder="public" id="new-quotebook-collection-text-box" disabled={true} onChange={(e) => handleQuotebookCollectionChange(e)} />
+                    </Form.Group>
+                </Form>
+                <Form>
+                    <b>Quotebook Name</b>
+                    <Form.Group className="pt-2">
+                        <Form.Control type="text" placeholder="Your new quotebook" id="new-quotebook-text-box" onChange={(e) => handleQuotebookNameChange(e)} />
+                    </Form.Group>
+                </Form>
             </Modal.Body>
 
             <Modal.Footer>
-                <Button variant="secondary">Close</Button>
-                <Button variant="primary">Save changes</Button>
+                <Button variant="primary" type="submit" id="new-quotebook-button" onClick={(e) => onSubmit(newQuotebookCollection, newQuotebookName)}>Create</Button>
             </Modal.Footer>
         </Modal>
     )

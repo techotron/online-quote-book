@@ -28,9 +28,9 @@ func addAllowAllCors(g *gin.Engine) {
 // addRoutes using existing controllers
 func addRoutes(g *gin.Engine) {
 	g.GET("/info", controllers.GetInfo)
-	
-	g.GET("/quotes/:quoteBook", controllers.GetQuotes)
+
+	g.GET("/quotes/:quotebookCollection/:quotebook", controllers.GetQuotes)
 
 	g.GET("/quotebooks", controllers.GetAllQuoteBooks)
-	g.POST("/quotebook/:quoteBook", controllers.AddQuoteBook)
+	g.POST("/quotebook/:quotebookCollection/:quotebook", controllers.AddQuoteBook)
 }

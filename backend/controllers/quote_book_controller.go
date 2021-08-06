@@ -12,14 +12,16 @@ import (
 
 // AddQuoteBook creates a new quotebook in the quote_book table
 func AddQuoteBook(c *gin.Context) {
-	quoteBook := c.Param("quoteBook")
-	err := services.AddQuoteBook(quoteBook)
+	quotebook := c.Param("quotebook")
+	quotebookCollection := c.Param("quotebookCollection")
+
+	err := services.AddQuoteBook(quotebookCollection, quotebook)
 	if err != nil {
-		log.Errorf("Failed to add quotebook: %s. Server error: %s", quoteBook, err)
+		log.Errorf("Failed to add quotebook: %s. Server error: %s", quotebook, err)
 		c.JSON(http.StatusInternalServerError, MessageHandler(constants.MessageInternalError))
 		return
 	}
-	log.Infof("Added new quote book: %s", quoteBook)
+	log.Infof("Added new quote book: %s", quotebook)
 	c.JSON(http.StatusOK, MessageHandler(constants.NewQuoteBookAddedSuccess))
 }
 

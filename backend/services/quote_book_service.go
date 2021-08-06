@@ -6,24 +6,26 @@ import (
 )
 
 // AddQuoteBook adds a new row in the quote_books table
-func AddQuoteBook(quoteBook string) (err error) {
-	_, err = db.Conn.Exec(`INSERT INTO quote_books(quote_book_name, created_on, last_updated) VALUES ($1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)`, quoteBook)
+func AddQuoteBook(quotebookCollection, quotebook string) (err error) {
+	_, err = db.Conn.Exec(`INSERT INTO quote_books(quote_book_collection, quote_book_name, created_on, last_updated) 
+			VALUES ($1, $2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+			ON CONFLICT (quote_book_collection, quote_book_name) DO NOTHING`, quotebookCollection, quotebook)
 	return err
 }
 
 // GetAllQuoteBooks returns all quote books from the quote_books table
-func GetAllQuoteBooks() (quoteBooks []models.QuoteBooks, err error) {
-	rows, err := db.Conn.Queryx("SELECT * FROM quote_books ORDER BY quote_book_name ASC")
+func GetAllQuoteBooks() (quotebooks []models.QuoteBooks, err error) {
+	rows, err := db.Conn.Queryx("SELECT * FROM quote_books ORDER BY quote_book_collection ASC, quote_book_name ASC")
 	if err != nil {
-		return quoteBooks, err
+		return quotebooks, err
 	}
 	for rows.Next() {
-		quoteBook := models.QuoteBooks{}
-		err = rows.StructScan(&quoteBook)
+		quotebook := models.QuoteBooks{}
+		err = rows.StructScan(&quotebook)
 		if err != nil {
-			return quoteBooks, err
+			return quotebooks, err
 		}
-		quoteBooks = append(quoteBooks, quoteBook)
+		quotebooks = append(quotebooks, quotebook)
 	}
-	return quoteBooks, err
+	return quotebooks, err
 }

@@ -7,7 +7,7 @@ import axios from 'axios';
 import NewQuoteBookModal from './QuotebookModal/newQuoteBookModal';
 
 const MainNavBar = () => {
-    const [quoteBooks, setQuoteBooks] = useState('');
+    const [quotebooks, setQuoteBooks] = useState('');
     const [showNewQuoteBookModal, setShowNewQuoteBookModal] = useState(false);
 
     const backendUrl = window.env.REACT_APP_BACKEND_API
@@ -20,7 +20,7 @@ const MainNavBar = () => {
         .catch(err => {
             console.error(err);
         })
-    }, [])
+    }, [ backendUrl ])
 
     return (
         <div>
@@ -51,11 +51,11 @@ const MainNavBar = () => {
                                 placeholder="Search quotebooks..."
                                 onChange={(selected) => {
                                     if (selected.length > 0) {
-                                        window.location.href = `/quotebooks/${selected[0].quoteBookName}`;
+                                        window.location.href = `/quotebooks/${selected[0].quotebookCollection}/${selected[0].quotebookName}`;
                                     }
                                 }}
-                                options={quoteBooks}
-                                labelKey={(option) => `${option.quoteBookName}`}
+                                options={quotebooks}
+                                labelKey={(option) => `${option.quotebookCollection}/${option.quotebookName}`}
                             />
                         </InputGroup>
                     </Nav>
