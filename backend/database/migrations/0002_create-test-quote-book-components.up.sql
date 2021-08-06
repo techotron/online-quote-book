@@ -1,8 +1,8 @@
 INSERT INTO quote_books(quote_book_name) VALUES ('testquotebook');
 
-INSERT INTO quotees(quotee_name) VALUES ('test quotee');
+INSERT INTO quotees(quotee_name, quote_book_id) VALUES ('test quotee', 1);
 
-INSERT INTO witnesses(witness_name) VALUES ('test witness');
+INSERT INTO witnesses(witness_name, quote_book_id) VALUES ('test witness', 1);
 
 INSERT INTO quotes(quote_book_id, quote_text, quotee_id, witness_id, is_deleted, quote_date, inserted_date) VALUES 
     (1, 'Balls are round, like windows', 1, 1, FALSE, '2015-09-10', current_timestamp),

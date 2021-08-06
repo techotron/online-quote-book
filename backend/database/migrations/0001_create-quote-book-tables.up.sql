@@ -5,12 +5,16 @@ CREATE TABLE IF NOT EXISTS quote_books(
 
 CREATE TABLE IF NOT EXISTS witnesses(
     witness_id SERIAL PRIMARY KEY,
-    witness_name VARCHAR(50) NOT NULL
+    quote_book_id INT,
+    witness_name VARCHAR(50) NOT NULL,
+    CONSTRAINT fk_quotebook_on_witnesses FOREIGN KEY(quote_book_id) REFERENCES quote_books(quote_book_id)
 );
 
 CREATE TABLE IF NOT EXISTS quotees(
     quotee_id SERIAL PRIMARY KEY,
-    quotee_name VARCHAR(50) NOT NULL
+    quote_book_id INT,
+    quotee_name VARCHAR(50) NOT NULL,
+    CONSTRAINT fk_quotebook_on_witnesses FOREIGN KEY(quote_book_id) REFERENCES quote_books(quote_book_id)
 );
 
 CREATE TABLE IF NOT EXISTS quotes(
