@@ -30,6 +30,7 @@ func addRoutes(g *gin.Engine) {
 	g.GET("/info", controllers.GetInfo)
 
 	g.GET("/quotes/:quotebookCollection/:quotebook", controllers.GetQuotes)
+	g.POST("/quotes/:quotebookCollection/:quotebook", controllers.AddQuote)
 
 	g.GET("/quotebooks", controllers.GetAllQuoteBooks)
 	g.POST("/quotebook/:quotebookCollection/:quotebook", controllers.AddQuoteBook)
