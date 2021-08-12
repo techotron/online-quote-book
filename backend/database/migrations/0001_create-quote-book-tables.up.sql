@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS quotes(
     witness_id INT NOT NULL,
     is_deleted BOOLEAN,
     inserted_date TIMESTAMP,
-    quote_date TIMESTAMP,
+    quote_date VARCHAR,
     PRIMARY KEY(quote_id, quote_book_collection, quote_book_name),
     CONSTRAINT fk_quotee_on_quotes FOREIGN KEY(quotee_id) REFERENCES quotees(quotee_id),
     CONSTRAINT fk_witness_on_quotes FOREIGN KEY(witness_id) REFERENCES witnesses(witness_id),
