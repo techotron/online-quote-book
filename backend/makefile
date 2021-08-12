@@ -1,5 +1,6 @@
-REGISTRY=techotron/online-quote-book
-APP=backend:$(VERSION)
+REGISTRY=techotron
+VERSION=$(shell git rev-parse --short HEAD)
+APP=online-quote-book:be-$(VERSION)
 IMAGE=golang:1.16 go
 GOLANGCI_TAG=v1.28.3
 ENVIRONMENT=dev
@@ -28,7 +29,11 @@ all-tests:
 test: all-tests down
 lint:
 	docker run --rm -v $(shell pwd):/app -w /app golangci/golangci-lint:$(GOLANGCI_TAG) golangci-lint run
-publish: docker-login	docker-push
+publish: docker-login docker-push
+docker-push:
+	docker push $(REGISTRY)/$(APP)
+docker-login:
+	docker login -u techotron
 coverage: test coverage-report
 coverage-report: 
 	$(LOCAL_GO) tool cover -html=c.out

@@ -32,3 +32,26 @@ func GetQuotes(quotebookCollection, quotebook string) (quotes []models.Quotes, s
 	}
 	return quotes, sqlError
 }
+
+// AddQuote add a new quote to the quotes table
+func AddQuote(q models.Quotes) (err error) {
+	_, err = db.Conn.Exec(`INSERT INTO quotes(
+		quote_book_collection,
+		quote_book_name,
+		quote_text,
+		quotee_id,
+		witness_id,
+		is_deleted,
+		quote_date,
+		inserted_date) VALUES (
+			$1, 
+			$2, 
+			$3, 
+			(SELECT quotee_id FROM quotees WHERE quote_book_collection=$1 AND quote_book_name=$2 AND quotee_name=$4),
+			(SELECT witness_id FROM witnesses WHERE quote_book_collection=$1 AND quote_book_name=$2 AND witness_name=$5),
+			FALSE,
+			$6,
+			CURRENT_TIMESTAMP
+		)`, q.QuotebookCollection, q.QuoteBookTitle, q.QuoteText, q.Quotee, q.Witness, q.QuoteDate)
+	return err
+}
