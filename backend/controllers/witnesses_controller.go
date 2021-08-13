@@ -16,16 +16,16 @@ import (
 func GetWitnesses(c *gin.Context) {
 	quotebook := c.Param("quotebook")
 	quotebookCollection := c.Param("quotebookCollection")
-	q, err := services.GetWitnesses(quotebookCollection, quotebook)
+	w, err := services.GetWitnesses(quotebookCollection, quotebook)
 	if err != nil {
 		if err.Error() == constants.ErrorNoRowsFound {
 			log.Warnf("No witnesses found for collection: %s quote book: %s", quotebookCollection, quotebook)
-			c.JSON(http.StatusNotFound, q)
+			c.JSON(http.StatusNotFound, w)
 			return
 		}
 		log.Errorf("Server error: %s", err)
 		c.JSON(http.StatusInternalServerError, MessageHandler(constants.MessageInternalError))
 		return
 	}
-	c.JSON(http.StatusOK, q)
+	c.JSON(http.StatusOK, w)
 }

@@ -18,7 +18,8 @@ func GetQuotes(quotebookCollection, quotebook string) (quotes []models.Quotes, s
 		LEFT JOIN quote_books ON quotes.quote_book_collection = quote_books.quote_book_collection AND quotes.quote_book_name = quote_books.quote_book_name
 		LEFT JOIN quotees ON quotes.quotee_id = quotees.quotee_id
 		LEFT JOIN witnesses ON quotes.witness_id = witnesses.witness_id
-		WHERE quote_books.quote_book_collection=$1 AND quote_books.quote_book_name=$2`, quotebookCollection, quotebook)
+		WHERE quote_books.quote_book_collection=$1 AND quote_books.quote_book_name=$2
+		ORDER BY quotes.quote_date ASC`, quotebookCollection, quotebook)
 	if sqlError != nil {
 		return quotes, sqlError
 	}

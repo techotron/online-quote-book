@@ -11,7 +11,6 @@ const NewQuoteBookModal = ({ show, onHide }) => {
     const onSubmit = (quotebookCollection, quotebookName) => {
         axios.post(`${backendUrl}/quotebook/${quotebookCollection}/${quotebookName}`)
         .then(res => {
-            console.log(res.data)
             window.location.href = `/quotebooks/${quotebookCollection}/${quotebookName}`
         })
         .catch(err => {
