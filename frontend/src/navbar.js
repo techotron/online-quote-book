@@ -25,7 +25,7 @@ const MainNavBar = () => {
     return (
         <div>
             <Navbar bg="dark" variant="dark" expand="lg">
-                <Container>
+                <Container fluid={true}>
                     <Navbar.Brand href="/">Online Quote Book</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     
