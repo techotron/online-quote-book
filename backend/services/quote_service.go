@@ -10,14 +10,14 @@ func GetQuotes(quotebookCollection, quotebook string) (quotes []models.Quotes, s
 	quotes = []models.Quotes{}
 	rows, sqlError := db.Conn.Queryx(`SELECT 
 			quotes.quote_book_name,
-			quote_text,
-			quotee_name,
-			witness_name,
-			quote_date
-		FROM quotes 
+			quotes.quote_text,
+			quotes.quotee_name,
+			quotes.witness_name,
+			quotes.quote_date
+		FROM quotes
 		LEFT JOIN quote_books ON quotes.quote_book_collection = quote_books.quote_book_collection AND quotes.quote_book_name = quote_books.quote_book_name
-		LEFT JOIN quotees ON quotes.quotee_id = quotees.quotee_id
-		LEFT JOIN witnesses ON quotes.witness_id = witnesses.witness_id
+		LEFT JOIN quotees ON quotes.quotee_name = quotees.quotee_name
+		LEFT JOIN witnesses ON quotes.witness_name = witnesses.witness_name
 		WHERE quote_books.quote_book_collection=$1 AND quote_books.quote_book_name=$2
 		ORDER BY quotes.quote_date ASC`, quotebookCollection, quotebook)
 	if sqlError != nil {
@@ -40,16 +40,16 @@ func AddQuote(q models.Quotes) (err error) {
 		quote_book_collection,
 		quote_book_name,
 		quote_text,
-		quotee_id,
-		witness_id,
+		quotee_name,
+		witness_name,
 		is_deleted,
 		quote_date,
 		inserted_date) VALUES (
 			$1, 
 			$2, 
 			$3, 
-			(SELECT quotee_id FROM quotees WHERE quote_book_collection=$1 AND quote_book_name=$2 AND quotee_name=$4),
-			(SELECT witness_id FROM witnesses WHERE quote_book_collection=$1 AND quote_book_name=$2 AND witness_name=$5),
+			$4,
+			$5,
 			FALSE,
 			$6,
 			CURRENT_TIMESTAMP

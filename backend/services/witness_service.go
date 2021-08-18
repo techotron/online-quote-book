@@ -22,3 +22,5 @@ func GetWitnesses(quotebookCollection, quotebook string) (witnesses []models.Wit
 	}
 	return witnesses, sqlError
 }
+
+// GetWitness returns the witness row given the name, book and collection

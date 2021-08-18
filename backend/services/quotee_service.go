@@ -22,3 +22,5 @@ func GetQuotees(quotebookCollection, quotebook string) (quotees []models.Quotees
 	}
 	return quotees, sqlError
 }
+
+// GetQuotee returns the quotee row given the name, book and collection
