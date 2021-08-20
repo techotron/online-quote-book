@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS quotees(
     quote_book_name TEXT NOT NULL,
     quotee_name VARCHAR(50) NOT NULL,
     PRIMARY KEY(quote_book_collection, quote_book_name, quotee_name),
-    CONSTRAINT fk_quotebook_on_witnesses FOREIGN KEY(quote_book_collection, quote_book_name) REFERENCES quote_books(quote_book_collection, quote_book_name)
+    CONSTRAINT fk_quotebook_on_quotees FOREIGN KEY(quote_book_collection, quote_book_name) REFERENCES quote_books(quote_book_collection, quote_book_name)
 );
 
 CREATE TABLE IF NOT EXISTS quotes(

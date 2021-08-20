@@ -9,17 +9,15 @@ import (
 func GetQuotes(quotebookCollection, quotebook string) (quotes []models.Quotes, sqlError error) {
 	quotes = []models.Quotes{}
 	rows, sqlError := db.Conn.Queryx(`SELECT 
-			quotes.quote_book_name,
-			quotes.quote_text,
-			quotes.quotee_name,
-			quotes.witness_name,
-			quotes.quote_date
+			quote_book_name,
+			quote_book_collection,
+			quote_text,
+			quotee_name,
+			witness_name,
+			quote_date
 		FROM quotes
-		LEFT JOIN quote_books ON quotes.quote_book_collection = quote_books.quote_book_collection AND quotes.quote_book_name = quote_books.quote_book_name
-		LEFT JOIN quotees ON quotes.quotee_name = quotees.quotee_name
-		LEFT JOIN witnesses ON quotes.witness_name = witnesses.witness_name
-		WHERE quote_books.quote_book_collection=$1 AND quote_books.quote_book_name=$2
-		ORDER BY quotes.quote_date ASC`, quotebookCollection, quotebook)
+		WHERE quote_book_collection=$1 AND quote_book_name=$2
+		ORDER BY quote_date ASC`, quotebookCollection, quotebook)
 	if sqlError != nil {
 		return quotes, sqlError
 	}
