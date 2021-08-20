@@ -67,7 +67,13 @@ const QuoteBook = ({ location }) => {
             witness: newQuoteWitness
         }
         axios.post(`${backendUrl}/quotes/${quotebookCollection}/${quotebook}`, payload)
-        // TODO: add feedback and error checking here
+        .catch(err => {
+            console.error(err);
+            if (err.response.status === 400) {
+                // TODO: Create alarm popup to feed this message back to users
+                console.log(`Click on "Add new witness/quotee to add a row to the DB"`)
+            }
+        })
 
         setQuoteCount(quoteCount + 1)
     }

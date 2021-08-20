@@ -55,7 +55,40 @@ func AddQuote(c *gin.Context) {
 	q.Quotee = requestBody.Quotee
 	q.Witness = requestBody.Witness
 
-	err := services.AddQuote(q)
+	// TODO: Move Get/Add quotee and witness to internal function and call from here
+	// Check if given quotee already exists in table
+	quotee, err := services.GetQuotee(q.Quotee, q.QuotebookCollection, q.QuoteBookTitle)
+	if err != nil {
+		if err.Error() == constants.NoRowsErrorFromDB {
+			quotee.QuoteBookTitle = q.QuoteBookTitle
+			quotee.QuotebookCollection = q.QuotebookCollection
+			quotee.Quotee = q.Quotee
+			err = services.AddQuotee(quotee)
+			if err != nil {
+				log.Warn(err)
+				c.JSON(http.StatusInternalServerError, "Failed to add new quotee")
+			}
+		}
+		log.Warnf("Problem in querying for quotee: %s in %s/%s. Error: %s", q.Quotee, q.QuotebookCollection, q.QuoteBookTitle, err)
+	}
+
+	// Check if given witness already exists in table
+	witness, err := services.GetWitness(q.Witness, q.QuotebookCollection, q.QuoteBookTitle)
+	if err != nil {
+		if err.Error() == constants.NoRowsErrorFromDB {
+			witness.QuoteBookTitle = q.QuoteBookTitle
+			witness.QuotebookCollection = q.QuotebookCollection
+			witness.Witness = q.Witness
+			err = services.AddWitness(witness)
+			if err != nil {
+				log.Warn(err)
+				c.JSON(http.StatusInternalServerError, "Failed to add new witness")
+			}
+		}
+		log.Warnf("Problem in querying for witness: %s in %s/%s. Error: %s", q.Witness, q.QuotebookCollection, q.QuoteBookTitle, err)
+	}
+
+	err = services.AddQuote(q)
 	if err != nil {
 		log.Errorf("Failed to add quote: %s/%s. Server error: %s", q.QuotebookCollection, q.QuoteBookTitle, err)
 		c.JSON(http.StatusInternalServerError, MessageHandler(constants.MessageInternalError))

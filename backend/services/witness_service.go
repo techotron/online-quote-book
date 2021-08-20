@@ -22,3 +22,17 @@ func GetWitnesses(quotebookCollection, quotebook string) (witnesses []models.Wit
 	}
 	return witnesses, sqlError
 }
+
+// GetWitness returns the witness row given the witness name, book and collection
+func GetWitness(witnessName, quotebookCollection, quotebook string) (witness models.Witnesses, err error) {
+	err = db.Conn.Get(&witness, `SELECT * FROM witnesses WHERE quote_book_collection=$1 AND quote_book_name=$2 AND witness_name=$3`, quotebookCollection, quotebook, witnessName)
+	return witness, err
+}
+
+// AddWitness adds a witness row to the witnesses table
+func AddWitness(w models.Witnesses) (err error) {
+	_, err = db.Conn.Exec(`INSERT INTO witnesses(quote_book_collection, quote_book_name, witness_name) 
+		VALUES ($1, $2, $3)
+		ON CONFLICT (quote_book_collection, quote_book_name, witness_name) DO NOTHING`, w.QuotebookCollection, w.QuoteBookTitle, w.Witness)
+	return err
+}
