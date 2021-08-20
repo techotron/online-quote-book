@@ -55,6 +55,7 @@ func AddQuote(c *gin.Context) {
 	q.Quotee = requestBody.Quotee
 	q.Witness = requestBody.Witness
 
+	// TODO: Move Get/Add quotee and witness to internal function and call from here
 	// Check if given quotee already exists in table
 	quotee, err := services.GetQuotee(q.Quotee, q.QuotebookCollection, q.QuoteBookTitle)
 	if err != nil {
