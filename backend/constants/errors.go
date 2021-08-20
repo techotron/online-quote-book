@@ -5,4 +5,6 @@ const (
 	ErrorNoRowsFound = "sql: no rows in result set"
 	// UnableToMarshallPayload when unable to marshall request payload
 	UnableToMarshallPayload = "Unable to marshall payload"
+	// NoRowsErrorFromDB when no rows returned from SQL query
+	NoRowsErrorFromDB = "sql: no rows in result set"
 )
